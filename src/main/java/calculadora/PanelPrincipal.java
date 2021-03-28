@@ -71,7 +71,9 @@ public class PanelPrincipal extends JPanel implements ActionListener {
 					operando2 = areaTexto.getText().substring(operando1.length() + 1);
 					System.out.println("El operando 2 es: " + operando2);
 				}
-				if (aux.getText().equals("=") && !operacion.equals(null)) {
+				if(aux.getText().equals("=") && operando2.equals("")) {
+					areaTexto.setText(operando1);
+				}else if (aux.getText().equals("=") && !operacion.equals(null)) {
 					operando1 = "" + realizarOperacion(operando1, operando2, operacion);
 					areaTexto.setText(operando1);
 					operando2 = "";
