@@ -63,14 +63,18 @@ public class PanelPrincipal extends JPanel implements ActionListener {
 		if (o instanceof JButton) {
 			JButton aux = (JButton) o;
 			System.out.println(aux.getText());
+			//Comprobamos si el boton pulsado es numero.
 			if (!comprobarNumero(areaTexto, aux.getText())) {
+				//si el operador 1 no tiene valor lo añadimos
 				if (operando1.equals("")) {
 					operando1 = areaTexto.getText();
 					System.out.println("El operando 1 es: " + operando1);
-				} else if(!operacion.equals("")){
+				//(para operaciones concatendas después del igual)
+				} else if(!operacion.equals("")){ //comprobamos que no haya operación pulsada 
 					operando2 = areaTexto.getText().substring(operando1.length() + 1);
 					System.out.println("El operando 2 es: " + operando2);
 				}
+				//Comprobamos que hay una operación que raealizar
 				if(aux.getText().equals("=") && operando2.equals("")) {
 					areaTexto.setText(operando1);
 				}else if (aux.getText().equals("=") && !operacion.equals(null)) {
@@ -81,21 +85,26 @@ public class PanelPrincipal extends JPanel implements ActionListener {
 					System.out.println("El operando 1 es: " + operando1);
 					System.out.println("El operando 2 es: " + operando2);
 					System.out.println("La operación es: " + operacion);
-				}else if(aux.getText().equals("C")) {
-					areaTexto.setText("");
-					operando1 = "";
-					operando2 = "";
-					operacion = "";
+				//En caso de no ser igual guardamos la operación
 				}else if (aux.getText().equals("+") || aux.getText().equals("-") || aux.getText().equals("*")
 						|| aux.getText().equals("/")){
 					operacion = aux.getText();
 					System.out.println("La operación es: " + operacion);
 				}
 			}
+			//Si no es igual no limpiamos la pantalla
 			if(!aux.getText().equals("=")) {
 				areaTexto.setText(areaTexto.getText() + aux.getText());
 			}
+			//Al pulsar C todas las variables vuelven a no tener información
+			if(aux.getText().equals("C")) {
+				areaTexto.setText("");
+				operando1 = "";
+				operando2 = "";
+				operacion = "";
+			}
 
+			//Habilitamos y deshabilitamos los botones correspondientes
 			if (aux.getText().equals("+") || aux.getText().equals("-") || aux.getText().equals("*")
 					|| aux.getText().equals("/")) {
 				for (int i = 10; i < this.botonera.getgrupoBotones().length - 1; i++) {
@@ -113,6 +122,7 @@ public class PanelPrincipal extends JPanel implements ActionListener {
 		}
 	}
 
+	//Método para comprobar si es un numero o no
 	private boolean comprobarNumero(JTextArea areaTexto, String siguienteBoton) {
 		try {
 			Integer.parseInt(areaTexto.getText());
@@ -124,6 +134,7 @@ public class PanelPrincipal extends JPanel implements ActionListener {
 		return true;
 	}
 
+	//Método que realiza la operación
 	private float realizarOperacion(String num1, String num2, String ope) {
 		float numero1, numero2;
 		numero1 = Float.parseFloat(num1);
